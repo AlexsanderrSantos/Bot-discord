@@ -1,0 +1,12 @@
+# Ignorar FFmpeg
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe
+
+# Python
+__pycache__/
+*.pyc
+
+# Ambiente virtual (se usar depois)
+venv/
+.env
