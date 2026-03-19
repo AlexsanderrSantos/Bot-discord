@@ -18,10 +18,10 @@ loop_mode = False
 async def on_ready():
     print(f"Bot online! {bot.user}")
 
-        await wavelink.Pool.connect(
+    await wavelink.Pool.connect(
         nodes=[wavelink.Node(
-                uri="LAVALINK_HOST",
-                password="LAVALINK_PASSWORD"
+            uri=os.getenv("LAVALINK_HOST"),
+            password=os.getenv("LAVALINK_PASSWORD")
         )],
         client=bot
     )
@@ -82,52 +82,26 @@ async def help(ctx):
     
 @bot.command()
 async def play(ctx, *, query):
-if not ctx.author.voice:
-    await ctx.send("Entra na call primeiro.")
-    return
-
-vc: wavelink.Player = ctx.voice_client
-
-if not vc:
-    vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
-
-tracks = await wavelink.Playable.search(query)
-
-if not tracks:
-    await ctx.send("Não encontrei nada.")
-    return
-
-track = tracks[0]
-
-await vc.play(track)
-
-await ctx.send(f"▶️ Tocando: {track.title}")
-    
-async def play_next(ctx):
-global current_song, last_song
-
-if not queue:
-    if loop_mode and current_song:
-        queue.append(current_song)
-    else: 
-        current_song = None
+    if not ctx.author.voice:
+        await ctx.send("Entra na call primeiro.")
         return
-    
-vc = ctx.voice_client
-music = queue.pop(0)
 
-if current_song:
-    last_song = current_song
-current_song = music
+    vc: wavelink.Player = ctx.voice_client
 
-with yt_dlp.YoutubeDL(ytdl_opts) as ytdl:
-    info = ytdl.extract_info(music["url"], download=False)
-    audio_url = info["url"]
-    
-source = discord.FFmpegPCMAudio(audio_url, before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5", options="-vn")
-vc.play(source, after=lambda e: bot.loop.create_task(play_next(ctx)))
+    if not vc:
+        vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
 
-await ctx.send(f"▶️ Tocando: {music['title']}")
+    tracks = await wavelink.Playable.search(query)
+
+    if not tracks:
+        await ctx.send("Não encontrei nada.")
+        return
+
+    track = tracks[0]
+
+    await vc.play(track)
+
+    await ctx.send(f"▶️ Tocando: {track.title}")
     
 @bot.command()
 async def skip(ctx):
