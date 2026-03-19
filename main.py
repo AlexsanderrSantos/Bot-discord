@@ -17,7 +17,14 @@ loop_mode = False
 ytdl_opts = {
     "format": "bestaudio/best",
     "noplaylist":True,
-    "quiet": True
+    "quiet": True,
+    "default_search": "ytsearch",
+    "source_address": "0.0.0.0,
+    "extractor_args": {
+        "youtube": {
+            "player_client": ["android"]
+        }
+    }
 }
 
 ffmpeg_opts = {
@@ -118,9 +125,10 @@ async def play (ctx, *, query):
         last_song = current_song
 
     current_song = music
-
+    
+    audio_url = info["url"]
     source = discord.FFmpegPCMAudio(
-        info["url"],
+        audio_url,
         before_options="-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
         options="-vn"
     )
