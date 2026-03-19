@@ -13,19 +13,21 @@ queue = []
 current_song = None
 last_song = None
 loop_mode = False
+cookies_content = os.getenv("YOUTUBE_COOKIES")
 
+if cookies_content:
+    with open("cookies.txt", "w") as f:
+        f.write(cookies_content)
+        
 ytdl_opts = {
     "format": "bestaudio/best",
     "noplaylist":True,
     "quiet": True,
     "default_search": "ytsearch",
     "source_address": "0.0.0.0",
-    "extractor_args": {
-        "youtube": {
-            "player_client": ["android"]
-        }
-    }
+    "cookiefile": "cookies.txt"
 }
+
 
 ffmpeg_opts = {
     "options": "-vn"
