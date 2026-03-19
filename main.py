@@ -20,7 +20,7 @@ if cookies_content:
         f.write(cookies_content)
         
 ytdl_opts = {
-    "format": "bestaudio[ext=m4a]/bestaudio/best",
+    "format": "bestaudio/best",
     "noplaylist": True,
     "quiet": True,
     "default_search": "ytsearch",
@@ -28,7 +28,7 @@ ytdl_opts = {
     "cookiefile": "cookies.txt",
     "extractor_args": {
         "youtube": {
-            "player_client": ["android", "web"]
+            "player_client": ["android"]
         }
     }
 }
@@ -113,7 +113,12 @@ async def play (ctx, *, query):
         if not query.startswith("http"):
             query = f"ytsearch1:{query}"
             
-        info = ytdl.extract_info(query, download=False)
+        try:
+            info = ytdl.extract_info(query, download=False)
+        except Exception as e:
+            await ctx.send("❌ Não consegui tocar essa música (YouTube bloqueou 😢)")
+            return
+            
         if "entries" in info:
             info = info["entries"][0]
 
