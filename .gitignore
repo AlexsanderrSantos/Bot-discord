@@ -2,6 +2,8 @@
 ffmpeg.exe
 ffplay.exe
 ffprobe.exe
+cookies.txt
+
 
 # Python
 __pycache__/
