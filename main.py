@@ -21,7 +21,8 @@ async def on_ready():
     await wavelink.Pool.connect(
         nodes=[wavelink.Node(
             uri=os.getenv("LAVALINK_HOST"),
-            password=os.getenv("LAVALINK_PASSWORD")
+            password=os.getenv("LAVALINK_PASSWORD"),
+            secure=True
         )],
         client=bot
     )
