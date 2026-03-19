@@ -91,7 +91,7 @@ async def play(ctx, *, query):
     if not vc:
         vc = await ctx.author.voice.channel.connect(cls=wavelink.Player)
 
-    tracks = await wavelink.Playable.search(query)
+    tracks = await wavelink.Playable.search(f"ytsearch:{query}")
 
     if not tracks:
         await ctx.send("Não encontrei nada.")
