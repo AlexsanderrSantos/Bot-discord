@@ -19,18 +19,16 @@ if cookies_content:
     with open("cookies.txt", "w") as f:
         f.write(cookies_content)
         
-ytdl_opts = {
-    "format": "bestaudio[ext=m4a]/bestaudio/best",
-    "noplaylist": True,
-    "quiet": True,
-    "default_search": "ytsearch",
-    "source_address": "0.0.0.0",
-    "cookiefile": "cookies.txt",
-    "extractor_args": {
-        "youtube": {
-            "player_client": ["android", "web"]
-        }
-    }
+ydl_opts = {
+    'format': 'bestaudio/best',
+    'postprocessors': [{
+        'key': 'FFmpegExtractAudio',
+        'preferredcodec': 'mp3',
+        'preferredquality': '192',
+    }],
+    # Adicione esta linha abaixo:
+    'cookiefile': 'youtube_cookies.txt', 
+    'noplaylist': True,
 }
 
 
