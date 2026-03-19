@@ -18,12 +18,13 @@ loop_mode = False
 async def on_ready():
     print(f"Bot online! {bot.user}")
 
-   node = wavelink.Node(
-    uri=f"http://{os.getenv('LAVALINK_HOST')}:80",
-    password=os.getenv("LAVALINK_PASSWORD")
-)
-
-    await wavelink.Pool.connect(nodes=[node], client=bot)
+        await wavelink.Pool.connect(
+        nodes=[wavelink.Node(
+                uri="LAVALINK_HOST",
+                password="LAVALINK_PASSWORD"
+        )],
+        client=bot
+    )
     
 @bot.command()
 async def help(ctx):
