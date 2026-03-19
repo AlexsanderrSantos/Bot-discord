@@ -20,12 +20,17 @@ if cookies_content:
         f.write(cookies_content)
         
 ytdl_opts = {
-    "format": "bestaudio/best",
-    "noplaylist":True,
+    "format": "bestaudio[ext=m4a]/bestaudio/best",
+    "noplaylist": True,
     "quiet": True,
     "default_search": "ytsearch",
     "source_address": "0.0.0.0",
-    "cookiefile": "cookies.txt"
+    "cookiefile": "cookies.txt",
+    "extractor_args": {
+        "youtube": {
+            "player_client": ["android", "web"]
+        }
+    }
 }
 
 
