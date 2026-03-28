@@ -268,4 +268,4 @@ async def remove(ctx, index: int = None):
        
         
                 
-bot.run(os.getenv("TOKEN"))
+TOKEN = os.getenv("DISCORD_TOKEN")
