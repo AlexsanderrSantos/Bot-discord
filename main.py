@@ -268,4 +268,4 @@ async def remove(ctx, index: int = None):
        
         
                 
-TOKEN = os.getenv("DISCORD_")
+TOKEN = os.getenv("DISCORD_TOKEN")
